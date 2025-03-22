@@ -1,0 +1,53 @@
+# Application
+spring:
+  application:
+    name: message-transformer-platform
+
+  # MongoDB Configuration
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/voice-messages
+      auto-index-creation: true
+
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  # Spring Security
+  security:
+    user:
+      name: admin
+      password: admin
+
+  # Spring AI Configuration
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:${llm.api.key}}
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:your-anthropic-key-here}
+
+# Server Configuration
+server:
+  port: 8080
+
+# AWS S3 Configuration
+aws:
+  s3:
+    bucket-name: voice-messages-bucket
+    region: us-east-1
+    endpoint: http://localhost:9000
+    path-style-access-enabled: true
+
+# Kafka Topics
+kafka:
+  topics:
+    voice-processing-status: voice-processing-status
+
+# LLM API Configuration
+llm:
+  api:
+    endpoint: https://api.openai.com/v1
+    key: ${LLM_API_KEY:your-api-key-here}
